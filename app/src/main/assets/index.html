@@ -3,116 +3,397 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KasirHP - Kasir & Hitung HPP</title>
+  <title>KasirHP POS</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <h1>KasirHP</h1>
-      <p class="subtitle">Kasir Offline, Stok &amp; Hitung HPP / Laba</p>
+  <!-- TOP APP BAR -->
+  <header class="appbar">
+    <button id="btnOpenDrawer" class="icon-btn" type="button" aria-label="Menu">☰</button>
+    <div class="appbar-title">
+      <strong id="headerNamaToko">Toko Hendri S</strong>
+      <small id="headerSubPage">Home</small>
     </div>
-    <button id="btnResetDemo" class="btn btn-ghost" type="button">Reset Data</button>
+    <button id="btnQuickHome" class="icon-btn" type="button" title="Home">⌂</button>
   </header>
 
-  <nav class="tabs">
-    <button class="tab-btn active" data-tab="kasir" type="button">Kasir</button>
-    <button class="tab-btn" data-tab="produk" type="button">Produk &amp; HPP</button>
-    <button class="tab-btn" data-tab="riwayat" type="button">Riwayat</button>
-  </nav>
+  <!-- OVERLAY & SIDEBAR DRAWER -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <aside id="sideDrawer" class="drawer">
+    <div class="drawer-header">
+      <div class="drawer-logo">🏠</div>
+      <div class="drawer-info">
+        <div id="drawerOwner" class="drawer-owner">Hendri S</div>
+        <div class="drawer-badges">
+          <span class="badge-red">🏪 <span id="drawerStoreBadge">Toko</span></span>
+          <button id="btnQuickLock" class="badge-key" type="button" title="Kunci Layar">🔑</button>
+        </div>
+      </div>
+    </div>
 
-  <main class="container">
-    <!-- TAB KASIR -->
-    <section id="tab-kasir" class="tab-panel active">
-      <div class="card">
-        <input id="searchProduk" type="text" placeholder="Cari nama produk..." />
-        <div id="daftarProdukKasir" class="grid-produk"></div>
+    <nav class="drawer-menu" id="drawerMenu">
+      <button class="menu-item active" data-page="home"><span>🏠</span> Home</button>
+      <button class="menu-item" data-page="transaksi-baru"><span>🛒</span> Transaksi Baru</button>
+      <button class="menu-item" data-page="transaksi-cepat"><span>⚡</span> Transaksi Cepat</button>
+      <button class="menu-item" data-page="daftar-transaksi"><span>🧾</span> Daftar Transaksi</button>
+      <button class="menu-item" data-page="produk"><span>📦</span> Produk</button>
+      <button class="menu-item" data-page="pembelian"><span>📥</span> Pembelian</button>
+      <button class="menu-item" data-page="pengeluaran"><span>💸</span> Pengeluaran</button>
+      <button class="menu-item" data-page="arus-kas"><span>🏧</span> Arus Kas</button>
+      <button class="menu-item" data-page="utang"><span>📒</span> Utang</button>
+      <button class="menu-item" data-page="master"><span>🗂️</span> Master</button>
+      <button class="menu-item" data-page="laporan"><span>📊</span> Laporan</button>
+      <button class="menu-item" data-page="pengaturan"><span>⚙️</span> Pengaturan</button>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-wrap">
+    <!-- 1. HOME -->
+    <section id="page-home" class="page active">
+      <div class="hero-card">
+        <div>
+          <span class="hero-label">Omzet Hari Ini</span>
+          <h2 id="homeOmzetHariIni">Rp 0</h2>
+          <small id="homeLabaHariIni">Laba Bersih: Rp 0</small>
+        </div>
+        <div class="hero-kas">
+          <span>Saldo Kas</span>
+          <strong id="homeSaldoKas">Rp 0</strong>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <button class="quick-tile red" onclick="navigateTo('transaksi-baru')">
+          <span>🛒</span><strong>Transaksi Baru</strong>
+        </button>
+        <button class="quick-tile dark" onclick="navigateTo('transaksi-cepat')">
+          <span>⚡</span><strong>Transaksi Cepat</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('produk')">
+          <span>📦</span><strong>Produk</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('pembelian')">
+          <span>📥</span><strong>Pembelian</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('pengeluaran')">
+          <span>💸</span><strong>Pengeluaran</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('arus-kas')">
+          <span>🏧</span><strong>Arus Kas</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('utang')">
+          <span>📒</span><strong>Utang</strong>
+        </button>
+        <button class="quick-tile" onclick="navigateTo('laporan')">
+          <span>📊</span><strong>Laporan</strong>
+        </button>
       </div>
 
       <div class="card">
-        <h2>Keranjang</h2>
-        <div id="keranjangList" class="keranjang-list">
-          <p class="empty-text">Belum ada item dipilih.</p>
-        </div>
-        <div class="summary-row">
-          <span>Total Bayar</span>
-          <strong id="totalBayar">Rp 0</strong>
-        </div>
-        <div class="form-group">
-          <label for="uangBayar">Uang Diterima (Rp)</label>
-          <input id="uangBayar" type="number" min="0" placeholder="0" />
-        </div>
-        <div class="summary-row">
-          <span>Kembalian</span>
-          <strong id="kembalianText">Rp 0</strong>
-        </div>
-        <div class="summary-row profit-row">
-          <span>Estimasi Laba Transaksi</span>
-          <strong id="estimasiLaba">Rp 0</strong>
-        </div>
-        <button id="btnProsesBayar" class="btn btn-primary full-width" type="button">
-          Simpan Transaksi
-        </button>
+        <h3>Transaksi Terakhir</h3>
+        <div id="homeRecentTrx"></div>
       </div>
     </section>
 
-    <!-- TAB PRODUK & HPP -->
-    <section id="tab-produk" class="tab-panel">
+    <!-- 2. TRANSAKSI BARU -->
+    <section id="page-transaksi-baru" class="page">
       <div class="card">
-        <h2>Tambah / Edit Produk</h2>
+        <div class="row-2">
+          <input id="searchProdukKasir" type="text" placeholder="Cari produk..." />
+          <select id="filterKategoriKasir">
+            <option value="">Semua Kategori</option>
+          </select>
+        </div>
+        <div id="gridProdukKasir" class="produk-grid"></div>
+      </div>
+
+      <div class="card">
+        <h3>Keranjang Belanja</h3>
+        <div id="keranjangContainer"></div>
+
+        <div class="row-2 mt-10">
+          <div class="form-group">
+            <label>Diskon (Rp)</label>
+            <input id="inputDiskon" type="number" min="0" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Metode</label>
+            <select id="metodeBayar">
+              <option value="Tunai">Tunai</option>
+              <option value="Transfer / QRIS">Transfer / QRIS</option>
+              <option value="Utang">Catat Utang</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nama Pelanggan / Catatan (Opsional)</label>
+          <input id="catatanTrx" type="text" placeholder="Contoh: Mas Budi / Bungkus" />
+        </div>
+
+        <div class="summary-box">
+          <div class="sum-line"><span>Total Akhir</span><strong id="kasirTotalAkhir">Rp 0</strong></div>
+          <div class="sum-line green"><span>Estimasi Laba</span><strong id="kasirEstimasiLaba">Rp 0</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label>Uang Diterima (Rp)</label>
+          <input id="kasirUangBayar" type="number" min="0" placeholder="0" />
+          <div class="chip-row">
+            <button type="button" class="chip-btn" onclick="setUangPas()">Uang Pas</button>
+            <button type="button" class="chip-btn" onclick="tambahUang(10000)">+10rb</button>
+            <button type="button" class="chip-btn" onclick="tambahUang(20000)">+20rb</button>
+            <button type="button" class="chip-btn" onclick="tambahUang(50000)">+50rb</button>
+            <button type="button" class="chip-btn" onclick="tambahUang(100000)">+100rb</button>
+          </div>
+        </div>
+
+        <div class="sum-line big"><span>Kembalian</span><strong id="kasirKembalian">Rp 0</strong></div>
+        <button id="btnSimpanTrxBaru" class="btn btn-red full-width" type="button">Proses & Simpan Transaksi</button>
+      </div>
+    </section>
+
+    <!-- 3. TRANSAKSI CEPAT -->
+    <section id="page-transaksi-cepat" class="page">
+      <div class="card">
+        <h3>Transaksi Cepat (Input Nominal Langsung)</h3>
+        <form id="formTrxCepat">
+          <div class="form-group">
+            <label>Keterangan Item / Jasa</label>
+            <input id="cepatNama" type="text" required placeholder="Contoh: Penjualan Paket / Jasa" />
+          </div>
+          <div class="row-2">
+            <div class="form-group">
+              <label>Nominal Jual (Rp)</label>
+              <input id="cepatHarga" type="number" min="0" required placeholder="25000" />
+            </div>
+            <div class="form-group">
+              <label>Modal / HPP (Rp)</label>
+              <input id="cepatModal" type="number" min="0" value="0" placeholder="15000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Catatan Pelanggan (Opsional)</label>
+            <input id="cepatCatatan" type="text" placeholder="Nama pembeli..." />
+          </div>
+          <button class="btn btn-red full-width" type="submit">Simpan Transaksi Cepat</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 4. DAFTAR TRANSAKSI -->
+    <section id="page-daftar-transaksi" class="page">
+      <div class="card">
+        <h3>Daftar Transaksi Penjualan</h3>
+        <div id="listDaftarTrx"></div>
+      </div>
+    </section>
+
+    <!-- 5. PRODUK -->
+    <section id="page-produk" class="page">
+      <div class="card">
+        <h3>Form Produk & HPP</h3>
         <form id="formProduk">
-          <input type="hidden" id="produkId" />
+          <input type="hidden" id="editProdukId" />
           <div class="form-group">
-            <label for="namaProduk">Nama Produk</label>
-            <input id="namaProduk" type="text" required placeholder="Contoh: Mie Goreng Spesial" />
+            <label>Nama Produk</label>
+            <input id="prodNama" type="text" required placeholder="Nama barang / menu" />
+          </div>
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="prodKategori"></select>
           </div>
           <div class="row-2">
             <div class="form-group">
-              <label for="hargaModal">Modal / HPP (Rp)</label>
-              <input id="hargaModal" type="number" min="0" required placeholder="5000" />
+              <label>Modal / HPP (Rp)</label>
+              <input id="prodModal" type="number" min="0" required placeholder="5000" />
             </div>
             <div class="form-group">
-              <label for="hargaJual">Harga Jual (Rp)</label>
-              <input id="hargaJual" type="number" min="0" required placeholder="10000" />
+              <label>Harga Jual (Rp)</label>
+              <input id="prodJual" type="number" min="0" required placeholder="10000" />
             </div>
           </div>
           <div class="form-group">
-            <label for="stokProduk">Stok Awal</label>
-            <input id="stokProduk" type="number" min="0" required placeholder="20" />
+            <label>Stok Saat Ini</label>
+            <input id="prodStok" type="number" min="0" required placeholder="20" />
           </div>
           <div class="row-2">
-            <button id="btnSimpanProduk" class="btn btn-primary" type="submit">Simpan Produk</button>
-            <button id="btnBatalEdit" class="btn btn-secondary" type="button">Batal</button>
+            <button id="btnSubmitProduk" class="btn btn-red" type="submit">Simpan Produk</button>
+            <button id="btnResetFormProduk" class="btn btn-gray" type="button">Batal</button>
           </div>
         </form>
       </div>
 
       <div class="card">
-        <h2>Daftar Produk &amp; Margin HPP</h2>
-        <div id="daftarProdukKelola"></div>
+        <h3>Stok & Daftar Produk</h3>
+        <div id="listKelolaProduk"></div>
       </div>
     </section>
 
-    <!-- TAB RIWAYAT -->
-    <section id="tab-riwayat" class="tab-panel">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span>Total Omzet</span>
-          <strong id="statOmzet">Rp 0</strong>
-        </div>
-        <div class="stat-card">
-          <span>Total HPP</span>
-          <strong id="statModal">Rp 0</strong>
-        </div>
-        <div class="stat-card">
-          <span>Total Laba Bersih</span>
-          <strong id="statLaba">Rp 0</strong>
-        </div>
+    <!-- 6. PEMBELIAN (KULAKAN STOK) -->
+    <section id="page-pembelian" class="page">
+      <div class="card">
+        <h3>Catat Pembelian / Kulakan Stok</h3>
+        <form id="formPembelian">
+          <div class="form-group">
+            <label>Pilih Produk (Otomatis Tambah Stok)</label>
+            <select id="beliProdukId" required></select>
+          </div>
+          <div class="row-2">
+            <div class="form-group">
+              <label>Jumlah Masuk (Qty)</label>
+              <input id="beliQty" type="number" min="1" required placeholder="10" />
+            </div>
+            <div class="form-group">
+              <label>Total Harga Beli (Rp)</label>
+              <input id="beliTotal" type="number" min="0" required placeholder="50000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Supplier / Keterangan</label>
+            <input id="beliSupplier" type="text" placeholder="Nama agen / supplier" />
+          </div>
+          <button class="btn btn-red full-width" type="submit">Simpan Pembelian & Tambah Stok</button>
+        </form>
       </div>
 
       <div class="card">
-        <h2>Riwayat Transaksi</h2>
-        <div id="riwayatList"></div>
+        <h3>Riwayat Pembelian</h3>
+        <div id="listPembelian"></div>
+      </div>
+    </section>
+
+    <!-- 7. PENGELUARAN -->
+    <section id="page-pengeluaran" class="page">
+      <div class="card">
+        <h3>Catat Pengeluaran Operasional</h3>
+        <form id="formPengeluaran">
+          <div class="form-group">
+            <label>Nama Pengeluaran</label>
+            <input id="keluarNama" type="text" required placeholder="Contoh: Listrik, Plastik, Bensin" />
+          </div>
+          <div class="form-group">
+            <label>Nominal (Rp)</label>
+            <input id="keluarNominal" type="number" min="0" required placeholder="20000" />
+          </div>
+          <div class="form-group">
+            <label>Catatan</label>
+            <input id="keluarCatatan" type="text" placeholder="Keterangan tambahan" />
+          </div>
+          <button class="btn btn-red full-width" type="submit">Simpan Pengeluaran</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Daftar Pengeluaran</h3>
+        <div id="listPengeluaran"></div>
+      </div>
+    </section>
+
+    <!-- 8. ARUS KAS -->
+    <section id="page-arus-kas" class="page">
+      <div class="stats-3">
+        <div class="stat-box"><span>Kas Masuk</span><strong id="kasMasukTotal" class="green">Rp 0</strong></div>
+        <div class="stat-box"><span>Kas Keluar</span><strong id="kasKeluarTotal" class="red-text">Rp 0</strong></div>
+        <div class="stat-box"><span>Saldo Kas</span><strong id="kasSaldoTotal">Rp 0</strong></div>
+      </div>
+      <div class="card">
+        <h3>Mutasi Arus Kas</h3>
+        <div id="listArusKas"></div>
+      </div>
+    </section>
+
+    <!-- 9. UTANG -->
+    <section id="page-utang" class="page">
+      <div class="card">
+        <h3>Catat Utang / Piutang</h3>
+        <form id="formUtang">
+          <div class="row-2">
+            <div class="form-group">
+              <label>Jenis</label>
+              <select id="utangJenis">
+                <option value="Piutang Pelanggan">Piutang (Kasbon Pembeli)</option>
+                <option value="Utang Toko">Utang Toko (Ke Supplier)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nominal (Rp)</label>
+              <input id="utangNominal" type="number" min="0" required placeholder="50000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nama Orang / Supplier</label>
+            <input id="utangNama" type="text" required placeholder="Nama pelanggan / supplier" />
+          </div>
+          <div class="form-group">
+            <label>Keterangan</label>
+            <input id="utangCatatan" type="text" placeholder="Jatuh tempo / catatan" />
+          </div>
+          <button class="btn btn-red full-width" type="submit">Simpan Catatan Utang</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Daftar Utang & Piutang</h3>
+        <div id="listUtang"></div>
+      </div>
+    </section>
+
+    <!-- 10. MASTER -->
+    <section id="page-master" class="page">
+      <div class="card">
+        <h3>Master Kategori Produk</h3>
+        <form id="formKategori" class="row-2">
+          <input id="inputKategoriBaru" type="text" required placeholder="Nama kategori baru..." />
+          <button class="btn btn-red" type="submit">Tambah</button>
+        </form>
+        <div id="listKategoriMaster" class="mt-10"></div>
+      </div>
+    </section>
+
+    <!-- 11. LAPORAN -->
+    <section id="page-laporan" class="page">
+      <div class="card">
+        <h3>Ringkasan Laba Rugi</h3>
+        <div class="sum-line"><span>Total Omzet Penjualan</span><strong id="lapOmzet">Rp 0</strong></div>
+        <div class="sum-line"><span>Total HPP Produk Terjual</span><strong id="lapHpp">Rp 0</strong></div>
+        <div class="sum-line"><span>Laba Kotor</span><strong id="lapLabaKotor">Rp 0</strong></div>
+        <div class="sum-line"><span>Total Pengeluaran Operasional</span><strong id="lapPengeluaran" class="red-text">Rp 0</strong></div>
+        <div class="sum-line big green"><span>Laba Bersih Usaha</span><strong id="lapLabaBersih">Rp 0</strong></div>
+      </div>
+
+      <div class="card">
+        <h3>Produk Terlaris</h3>
+        <div id="lapProdukTerlaris"></div>
+      </div>
+    </section>
+
+    <!-- 12. PENGATURAN -->
+    <section id="page-pengaturan" class="page">
+      <div class="card">
+        <h3>Profil Toko & Pemilik</h3>
+        <form id="formPengaturan">
+          <div class="form-group">
+            <label>Nama Pemilik / Kasir</label>
+            <input id="setOwner" type="text" value="Hendri S" />
+          </div>
+          <div class="form-group">
+            <label>Nama Toko / Usaha</label>
+            <input id="setToko" type="text" value="Toko" />
+          </div>
+          <button class="btn btn-red full-width" type="submit">Simpan Profil Toko</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Backup & Restore Data</h3>
+        <div class="row-2">
+          <button id="btnExportJson" class="btn btn-dark" type="button">Salin Backup Data</button>
+          <button id="btnImportJson" class="btn btn-gray" type="button">Restore Data</button>
+        </div>
+        <textarea id="backupBox" rows="4" class="mt-10" placeholder="Tempel teks JSON backup di sini untuk restore..."></textarea>
+        <button id="btnResetSemua" class="btn btn-danger-full mt-10" type="button">Reset Semua Data ke Awal</button>
       </div>
     </section>
   </main>
