@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KasirHP - Kasir & Hitung HPP</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>KasirHP</h1>
+      <p class="subtitle">Kasir Offline, Stok &amp; Hitung HPP / Laba</p>
+    </div>
+    <button id="btnResetDemo" class="btn btn-ghost" type="button">Reset Data</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="kasir" type="button">Kasir</button>
+    <button class="tab-btn" data-tab="produk" type="button">Produk &amp; HPP</button>
+    <button class="tab-btn" data-tab="riwayat" type="button">Riwayat</button>
+  </nav>
+
+  <main class="container">
+    <!-- TAB KASIR -->
+    <section id="tab-kasir" class="tab-panel active">
+      <div class="card">
+        <input id="searchProduk" type="text" placeholder="Cari nama produk..." />
+        <div id="daftarProdukKasir" class="grid-produk"></div>
+      </div>
+
+      <div class="card">
+        <h2>Keranjang</h2>
+        <div id="keranjangList" class="keranjang-list">
+          <p class="empty-text">Belum ada item dipilih.</p>
+        </div>
+        <div class="summary-row">
+          <span>Total Bayar</span>
+          <strong id="totalBayar">Rp 0</strong>
+        </div>
+        <div class="form-group">
+          <label for="uangBayar">Uang Diterima (Rp)</label>
+          <input id="uangBayar" type="number" min="0" placeholder="0" />
+        </div>
+        <div class="summary-row">
+          <span>Kembalian</span>
+          <strong id="kembalianText">Rp 0</strong>
+        </div>
+        <div class="summary-row profit-row">
+          <span>Estimasi Laba Transaksi</span>
+          <strong id="estimasiLaba">Rp 0</strong>
+        </div>
+        <button id="btnProsesBayar" class="btn btn-primary full-width" type="button">
+          Simpan Transaksi
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB PRODUK & HPP -->
+    <section id="tab-produk" class="tab-panel">
+      <div class="card">
+        <h2>Tambah / Edit Produk</h2>
+        <form id="formProduk">
+          <input type="hidden" id="produkId" />
+          <div class="form-group">
+            <label for="namaProduk">Nama Produk</label>
+            <input id="namaProduk" type="text" required placeholder="Contoh: Mie Goreng Spesial" />
+          </div>
+          <div class="row-2">
+            <div class="form-group">
+              <label for="hargaModal">Modal / HPP (Rp)</label>
+              <input id="hargaModal" type="number" min="0" required placeholder="5000" />
+            </div>
+            <div class="form-group">
+              <label for="hargaJual">Harga Jual (Rp)</label>
+              <input id="hargaJual" type="number" min="0" required placeholder="10000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="stokProduk">Stok Awal</label>
+            <input id="stokProduk" type="number" min="0" required placeholder="20" />
+          </div>
+          <div class="row-2">
+            <button id="btnSimpanProduk" class="btn btn-primary" type="submit">Simpan Produk</button>
+            <button id="btnBatalEdit" class="btn btn-secondary" type="button">Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Daftar Produk &amp; Margin HPP</h2>
+        <div id="daftarProdukKelola"></div>
+      </div>
+    </section>
+
+    <!-- TAB RIWAYAT -->
+    <section id="tab-riwayat" class="tab-panel">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Total Omzet</span>
+          <strong id="statOmzet">Rp 0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Total HPP</span>
+          <strong id="statModal">Rp 0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Total Laba Bersih</span>
+          <strong id="statLaba">Rp 0</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Riwayat Transaksi</h2>
+        <div id="riwayatList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
