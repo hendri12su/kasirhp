@@ -530,3 +530,89 @@ textarea:focus {
   text-align: center;
   padding: 12px 0;
 }
+.home-quick-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin: 24px auto 30px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.menu-utama-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.menu-pendukung-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.circle-btn-huge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red-main, #b71c1c);
+  color: #ffffff;
+  border: 0;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(183, 28, 28, 0.28);
+  cursor: pointer;
+  position: relative;
+}
+
+.circle-btn-huge .icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.circle-btn-huge .label {
+  font-size: 13px;
+  font-weight: 700;
+  position: absolute;
+  bottom: -22px;
+  color: var(--text-main, #1f242b);
+  white-space: nowrap;
+}
+
+.circle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #144374;
+  color: #ffffff;
+  border: 0;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(20, 67, 116, 0.24);
+  cursor: pointer;
+  position: relative;
+}
+
+.circle-btn .icon {
+  font-size: 25px;
+  line-height: 1;
+}
+
+.circle-btn .label {
+  font-size: 11px;
+  font-weight: 600;
+  position: absolute;
+  bottom: -20px;
+  color: var(--text-muted, #6b7280);
+  white-space: nowrap;
+}
+
+.circle-btn-huge:active,
+.circle-btn:active {
+  transform: scale(0.95);
+}
