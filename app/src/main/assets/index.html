@@ -63,32 +63,31 @@
         </div>
       </div>
 
-      <div class="quick-grid">
-        <button class="quick-tile red" onclick="navigateTo('transaksi-baru')">
-          <span>🛒</span><strong>Transaksi Baru</strong>
-        </button>
-        <button class="quick-tile dark" onclick="navigateTo('transaksi-cepat')">
-          <span>⚡</span><strong>Transaksi Cepat</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('produk')">
-          <span>📦</span><strong>Produk</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('pembelian')">
-          <span>📥</span><strong>Pembelian</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('pengeluaran')">
-          <span>💸</span><strong>Pengeluaran</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('arus-kas')">
-          <span>🏧</span><strong>Arus Kas</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('utang')">
-          <span>📒</span><strong>Utang</strong>
-        </button>
-        <button class="quick-tile" onclick="navigateTo('laporan')">
-          <span>📊</span><strong>Laporan</strong>
-        </button>
-      </div>
+      <div class="home-quick-menu">
+  <div class="menu-utama-row">
+    <button class="circle-btn-huge red" onclick="navigateTo('transaksi-baru')" type="button">
+      <span class="icon">🛒+</span>
+      <span class="label">Transaksi Baru</span>
+    </button>
+  </div>
+
+  <div class="menu-pendukung-row">
+    <button class="circle-btn blue" onclick="navigateTo('daftar-transaksi')" type="button">
+      <span class="icon">💵</span>
+      <span class="label">Transaksi</span>
+    </button>
+
+    <button class="circle-btn blue" onclick="navigateTo('transaksi-cepat')" type="button">
+      <span class="icon">⚡</span>
+      <span class="label">Cepat</span>
+    </button>
+
+    <button class="circle-btn blue" onclick="navigateTo('laporan')" type="button">
+      <span class="icon">📊</span>
+      <span class="label">Laporan</span>
+    </button>
+  </div>
+</div>
 
       <div class="card">
         <h3>Transaksi Terakhir</h3>
