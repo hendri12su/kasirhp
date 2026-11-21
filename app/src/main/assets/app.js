@@ -931,3 +931,86 @@ document.getElementById("btnResetSemua").addEventListener("click", () => {
 
 /* INIT */
 renderAll();
+/* FIX KHUSUS TOMBOL GARIS TIGA (☰) DI HEADER */
+(function () {
+  function bukaDrawerKasir() {
+    var drawer =
+      document.getElementById("sideDrawer") ||
+      document.getElementById("drawer") ||
+      document.querySelector("aside.drawer, aside");
+    var overlay =
+      document.getElementById("drawerOverlay") ||
+      document.getElementById("overlay") ||
+      document.querySelector(".drawer-overlay, .overlay");
+
+    if (drawer) {
+      drawer.classList.add("open");
+      drawer.style.left = "0px";
+      drawer.style.transform = "translateX(0)";
+      drawer.style.visibility = "visible";
+      drawer.style.display = "block";
+      drawer.style.zIndex = "99999";
+    }
+    if (overlay) {
+      overlay.classList.add("open");
+      overlay.style.display = "block";
+      overlay.style.opacity = "1";
+      overlay.style.zIndex = "99990";
+    }
+  }
+
+  function tutupDrawerKasir() {
+    var drawer =
+      document.getElementById("sideDrawer") ||
+      document.getElementById("drawer") ||
+      document.querySelector("aside.drawer, aside");
+    var overlay =
+      document.getElementById("drawerOverlay") ||
+      document.getElementById("overlay") ||
+      document.querySelector(".drawer-overlay, .overlay");
+
+    if (drawer) {
+      drawer.classList.remove("open");
+      drawer.style.left = "-85%";
+      drawer.style.transform = "";
+    }
+    if (overlay) {
+      overlay.classList.remove("open");
+      overlay.style.display = "none";
+    }
+  }
+
+  function tangkapGarisTiga(e) {
+    var el = e.target.closest("button, a, span, div");
+    if (!el) return;
+    var txt = (el.textContent || "").trim();
+    var isDrawerBtn =
+      el.id === "btnOpenDrawer" ||
+      el.id === "btnMenu" ||
+      txt === "☰" ||
+      txt.indexOf("☰") !== -1;
+
+    if (isDrawerBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      bukaDrawerKasir();
+    }
+  }
+
+  document.addEventListener("pointerdown", tangkapGarisTiga, true);
+  document.addEventListener("click", tangkapGarisTiga, true);
+
+  document.addEventListener("click", function (e) {
+    var ov =
+      document.getElementById("drawerOverlay") ||
+      document.getElementById("overlay") ||
+      document.querySelector(".drawer-overlay, .overlay");
+    if (ov && e.target === ov) {
+      tutupDrawerKasir();
+    }
+    var menuBtn = e.target.closest("#drawerMenu button, .drawer-menu button, .nav-btn, .menu-item");
+    if (menuBtn) {
+      setTimeout(tutupDrawerKasir, 80);
+    }
+  });
+})();
